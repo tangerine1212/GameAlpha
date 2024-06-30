@@ -1,0 +1,37 @@
+{
+    'env': 'NlHoldemEnvWithOpponent',
+    #'default_policy_class': 'TrinalPpoPolicy',
+    'framework': 'torch',
+    'sample_batch_size': 50,
+    'train_batch_size': 1000,
+    'num_rollout_workers': 1,
+    "_enable_learner_api":False,
+    "_enable_rl_module_api":False,
+    "disable_env_checking":True,
+    "_disable_initialize_loss_from_dummy_batch" : True,
+    "exploration_config": {"type": "StochasticSampling"},
+    #'num_envs_per_worker': 1,
+    #'broadcast_interval': 5,
+    #'max_sample_requests_in_flight_per_worker': 1,
+    #'num_data_loader_buffers': 4,
+    'num_gpus': 1,
+    'gamma': 1,
+    'entropy_coeff': 1e-1,
+    'lr': 3e-4,
+    'model':{
+       'custom_model': 'NlHoldemNet',
+       'max_seq_len': 20,
+    },
+    "env_config":{
+        'custom_options': {
+            'weight':"default",
+            "cut":[[0,12],[13,25],[26,38],[39,51],[52,53],[53,54]],
+            'epsilon': 0.15,
+            'tracker_n': 1000,
+            'conut_bb_rather_than_winrate': 2,
+            'use_history': True,
+            'use_cardnum': True,
+            'history_len': 20,
+        },
+    }
+}
