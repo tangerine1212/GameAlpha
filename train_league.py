@@ -26,7 +26,6 @@ from ray import tune
 
 from agi.nl_holdem_env import NlHoldemEnvWithOpponent
 from agi.nl_holdem_net import NlHoldemNet
-from agi.nl_holdem_lg_net import NlHoldemLgNet
 from agi.TrinalPolicy import TrinalPpoPolicy
 from agi.league import League
 from util import get_winrate_and_weight
@@ -175,7 +174,6 @@ class TrinalCallsback(DefaultCallbacks):
     
 conf = eval(open("confs//nl_holdem.py").read().strip())
 ModelCatalog.register_custom_model('NlHoldemNet', NlHoldemNet)
-ModelCatalog.register_custom_model('NlHoldemLgNet', NlHoldemLgNet)
 register_env("NlHoldemEnvWithOpponent", lambda config: NlHoldemEnvWithOpponent(
         conf
 ))
@@ -238,6 +236,6 @@ tune.run(
     # resources_per_trial=algori.default_resource_request(tune_config),
     local_dir=str(Path("./log/").absolute()),
     resources_per_trial=tune.PlacementGroupFactory(
-    [{'GPU': 4.0, 'CPU': 2.0}]+[{'CPU':8}]*10
+    [{'GPU': 1.0, 'CPU': 2.0}]+[{'CPU':8}]*10
     )
 )
